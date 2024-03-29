@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 class Die:
 
@@ -12,5 +13,5 @@ class Die:
         except:
             ValueError("All faces values must be distinct")
 
-    def check_df(self):
+    def current_state(self):
         return self.df
