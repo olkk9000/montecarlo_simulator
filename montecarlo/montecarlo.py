@@ -56,7 +56,7 @@ class Die:
 
         INPUT: times - int
 
-        OUTPUT: python list 
+        OUTPUT: list 
         """
         face_list = list(self.df.index)
         weight_list = self.df['weight'].to_list()
@@ -157,9 +157,11 @@ class Analyzer:
         """
         df = self.game.game_df
         jackpot = 0
+        
+        roll_list = df.apply(lambda x: [x[c] for c in df.columns], axis=1)
 
-        for c in df.columns:
-            if len(df[c].unique()) == 1:
+        for l in roll_list.to_list():
+            if len(set(l)) == 1:
                 jackpot += 1
         
         return jackpot
@@ -182,8 +184,8 @@ class Analyzer:
 
         #creating and cleaning new dataframe
         df2 = pd.DataFrame(freqs, index=roll_number)
-        df2 = df2.astype(int)
         df2 = df2.fillna('0')
+        df2 = df2.astype(int)
 
         return df2
 

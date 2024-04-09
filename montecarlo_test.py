@@ -1,25 +1,151 @@
-from montecarlo import montecarlo
+import unittest
 import numpy as np
+import pandas as pd
+from montecarlo import montecarlo
 
-#testing
-# Die1 = montecarlo.Die(faces=np.array([4,5,6]))
-# Die2 = montecarlo.Die(faces=np.array([4,5,6]))
-# Die3 = montecarlo.Die(faces=np.array([4,5,6]))
+class MontecarloTestSuite(unittest.TestCase):
 
-# dlist = [Die1, Die2, Die3]
+    def test_1_change_weight(self):
+        #update a weight and see if the new weight is in the dataframe
+        face = 4
+        weight = 2 
+        Die1 = montecarlo.Die(faces=np.array([4,5,6]))
+        Die1.change_weight(face=face, weight=weight)
+        df1 = Die1.df
+        check = df1['weight'][face]
 
-# Game1 = montecarlo.Game(dlist)
-
-# Game1.play(times=6)
-
-# ana1 = montecarlo.Analyzer(Game1)
-# # print(ana1.jackpot())
-
-# print(ana1.combo_count())
-# #print(ana1.perm_count())
+        self.assertEqual(check, weight)
 
 
-Die1 = montecarlo.Die(faces=np.array([1,2,3]))
-Die1.change_weight(1, weight="10")
-print(Die1.current_state())
+    def test_2_roll(self):
+        #roll the dice and make sure result is list length equals times rolled
+        times = 2
+        Die2 = montecarlo.Die(faces=np.array([4,5,6]))
+        roll_result = Die2.roll(times=times)
 
+        self.assertEqual(len(roll_result), times)
+
+    
+    def test_3_current_state(self):
+        #create die object and check the current state matches input array
+        arr = np.array([4,5,6])
+        Die3 = montecarlo.Die(faces=arr)
+        state = Die3.current_state()
+
+        self.assertEqual(state.shape[0], len(arr))
+
+    
+    def test_4_play(self):
+        #check that play creats dataframe of appropriate length
+        times = 2
+
+        Die4a = montecarlo.Die(faces=np.array([4,5,6]))
+        Die4b = montecarlo.Die(faces=np.array([4,5,6]))
+        Die4c = montecarlo.Die(faces=np.array([4,5,6]))
+
+        Game4 = montecarlo.Game([Die4a, Die4b, Die4c])
+        Game4.play(times=times)
+
+        self.assertTrue(Game4.game_df.shape[0] == times)
+
+    def test_5_show_results_wide(self):
+        #check that show result wide results in wide format columns
+
+        Die5a = montecarlo.Die(faces=np.array([4,5,6]))
+        Die5b = montecarlo.Die(faces=np.array([4,5,6]))
+        Die5c = montecarlo.Die(faces=np.array([4,5,6]))
+        dlist5 = [Die5a, Die5b, Die5c]
+
+        Game5 = montecarlo.Game(dlist5)
+        Game5.play(times=2)
+
+        df5 = Game5.show_results(width="wide")
+
+        self.assertEqual(len(df5.columns), len(dlist5))
+
+
+    def test_6_show_results_narrow(self):
+        #check that show results narrow results in MultiIndex
+
+        Die6a = montecarlo.Die(faces=np.array([4,5,6]))
+        Die6b = montecarlo.Die(faces=np.array([4,5,6]))
+        Die6c = montecarlo.Die(faces=np.array([4,5,6]))
+
+        Game6 = montecarlo.Game([Die6a, Die6b, Die6c])
+        Game6.play(times=2)
+
+        df6 = Game6.show_results(width="narrow")
+
+        self.assertEqual(df6.index.names, ['roll_number', 'die_number'])
+
+    def test_7_jackpot(self):
+        #check that jackpot returns integer value
+
+        Die7a = montecarlo.Die(faces=np.array([1,2]))
+        Die7b = montecarlo.Die(faces=np.array([1,2]))
+        Die7c = montecarlo.Die(faces=np.array([1,2]))
+        dlist7 = [Die7a, Die7b, Die7c]
+
+        Game7 = montecarlo.Game(dlist7)
+        Game7.play(times=2)
+
+        ana7 = montecarlo.Analyzer(Game7)
+
+        jackpot7 = ana7.jackpot()
+        
+        self.assertTrue(type(jackpot7)==int)
+
+    def test_8_face_counts_per_roll(self):
+        #check that face count per roll returns appropriate dataframe 
+        #format and length matches times rolled
+
+        times=4
+        Die8a = montecarlo.Die(faces=np.array([4,5,6]))
+        Die8b = montecarlo.Die(faces=np.array([4,5,6]))
+        Die8c = montecarlo.Die(faces=np.array([4,5,6]))
+        dlist8 = [Die8a, Die8b, Die8c]
+
+        Game8 = montecarlo.Game(dlist8)
+        Game8.play(times=times)
+
+        ana8 = montecarlo.Analyzer(Game8)
+        df8 = ana8.face_counts_per_roll()
+
+        self.assertTrue((df8.index.name=='roll_number') & (len(df8)==times))
+
+    def test_9_combo_count(self):
+        #verify that combo count creates dataframe with combos column and MultiIndex
+
+        Die9a = montecarlo.Die(faces=np.array([4,5,6]))
+        Die9b = montecarlo.Die(faces=np.array([4,5,6]))
+        Die9c = montecarlo.Die(faces=np.array([4,5,6]))
+        dlist9 = [Die9a, Die9b, Die9c]
+
+        Game9 = montecarlo.Game(dlist9)
+        Game9.play(times=4)
+
+        ana9 = montecarlo.Analyzer(Game9)
+        df9 = ana9.combo_count()
+
+        self.assertTrue((df9.columns == ['combo_counts']) & (isinstance(df9.index, pd.MultiIndex)))
+
+
+    def test_10_perm_count(self):
+        #verify that perm count creates dataframe with perm column and MultiIndex
+        Die10a = montecarlo.Die(faces=np.array([4,5,6]))
+        Die10b = montecarlo.Die(faces=np.array([4,5,6]))
+        Die10c = montecarlo.Die(faces=np.array([4,5,6]))
+        dlist10 = [Die10a, Die10b, Die10c]
+
+        Game10 = montecarlo.Game(dlist10)
+        Game10.play(times=4)
+
+        ana10 = montecarlo.Analyzer(Game10)
+        df10 = ana10.perm_count()
+
+        self.assertTrue((df10.columns == ['perm_counts']) & (isinstance(df10.index, pd.MultiIndex)))
+
+                
+if __name__ == '__main__':
+    
+    unittest.main(verbosity=3)
