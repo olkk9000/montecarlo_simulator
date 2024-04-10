@@ -8,26 +8,33 @@
 ## Synopsis
 
 To install:
-```pip install https://github.com/olkk9000/ds5100_uts4gf_montecarlo.git```
+```
+pip install https://github.com/olkk9000/ds5100_uts4gf_montecarlo.git
+```
 
 To import:
-```from montecarlo import montecarlo```
+```
+from montecarlo import montecarlo
+```
 
 Create a dice:
-```Die = montecarlo.Die(faces=np.array([4,5,6]))```
+```
+Die = montecarlo.Die(faces=np.array([4,5,6]))
+```
 
 Play a game:
 ```
 die_list = [Die1, Die2, Die3]
 Game1 = montecarlo.Game(die_list)
 Game1.play(times=6)
-``` 
+```
 
 Analyze a game:
-```Analyzer1 = montecarlo.Analyzer(Game1)
+```
+Analyzer1 = montecarlo.Analyzer(Game1)
 df = Analyzer.combo_count()
-print(df)```
-
+print(df)
+```
 
 ## API Description
 - Die : Creates the die class which simulates the roll of dice given input faces and weights.
