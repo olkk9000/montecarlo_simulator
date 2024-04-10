@@ -5,7 +5,14 @@ from montecarlo import montecarlo
 
 class MontecarloTestSuite(unittest.TestCase):
 
-    def test_1_change_weight(self):
+    def test_1_die(self):
+        #check die creates Die Object
+        Die = montecarlo.Die(faces=np.array([4,5,6]))
+
+        self.assertTrue(type(Die), 'montecarlo.montecarlo.Die')
+
+
+    def test_2_change_weight(self):
         #update a weight and see if the new weight is in the dataframe
         face = 4
         weight = 2 
@@ -17,7 +24,7 @@ class MontecarloTestSuite(unittest.TestCase):
         self.assertEqual(check, weight)
 
 
-    def test_2_roll(self):
+    def test_3_roll(self):
         #roll the dice and make sure result is list length equals times rolled
         times = 2
         Die2 = montecarlo.Die(faces=np.array([4,5,6]))
@@ -26,7 +33,7 @@ class MontecarloTestSuite(unittest.TestCase):
         self.assertEqual(len(roll_result), times)
 
     
-    def test_3_current_state(self):
+    def test_4_current_state(self):
         #create die object and check the current state matches input array
         arr = np.array([4,5,6])
         Die3 = montecarlo.Die(faces=arr)
@@ -34,8 +41,15 @@ class MontecarloTestSuite(unittest.TestCase):
 
         self.assertEqual(state.shape[0], len(arr))
 
-    
-    def test_4_play(self):
+    def test_5_game(self):
+        #test game creates Game object
+        test_die = montecarlo.Die(faces=np.array([4,5,6]))
+        Game = montecarlo.Game([test_die])
+
+        self.assertTrue(type(Game), 'montecarlo.montecarlo.Game')
+
+
+    def test_6_play(self):
         #check that play creats dataframe of appropriate length
         times = 2
 
@@ -48,7 +62,7 @@ class MontecarloTestSuite(unittest.TestCase):
 
         self.assertTrue(Game4.game_df.shape[0] == times)
 
-    def test_5_show_results_wide(self):
+    def test_7_show_results_wide(self):
         #check that show result wide results in wide format columns
 
         Die5a = montecarlo.Die(faces=np.array([4,5,6]))
@@ -63,8 +77,15 @@ class MontecarloTestSuite(unittest.TestCase):
 
         self.assertEqual(len(df5.columns), len(dlist5))
 
+    def test_8_analyzer(self):
+        #test analyzer creates Analyzer object
+        test_die = montecarlo.Die(faces=np.array([4,5,6]))
+        test_game = montecarlo.Game([test_die])
+        test_analyzer = montecarlo.Analyzer(test_game)
 
-    def test_6_show_results_narrow(self):
+        self.assertTrue(type(test_analyzer), 'montecarlo.montecarlo.Analyzer')
+
+    def test_9_show_results_narrow(self):
         #check that show results narrow results in MultiIndex
 
         Die6a = montecarlo.Die(faces=np.array([4,5,6]))
@@ -78,7 +99,7 @@ class MontecarloTestSuite(unittest.TestCase):
 
         self.assertEqual(df6.index.names, ['roll_number', 'die_number'])
 
-    def test_7_jackpot(self):
+    def test_10_jackpot(self):
         #check that jackpot returns integer value
 
         Die7a = montecarlo.Die(faces=np.array([1,2]))
@@ -95,7 +116,7 @@ class MontecarloTestSuite(unittest.TestCase):
         
         self.assertTrue(type(jackpot7)==int)
 
-    def test_8_face_counts_per_roll(self):
+    def test_11_face_counts_per_roll(self):
         #check that face count per roll returns appropriate dataframe 
         #format and length matches times rolled
 
@@ -113,7 +134,7 @@ class MontecarloTestSuite(unittest.TestCase):
 
         self.assertTrue((df8.index.name=='roll_number') & (len(df8)==times))
 
-    def test_9_combo_count(self):
+    def test_12_combo_count(self):
         #verify that combo count creates dataframe with combos column and MultiIndex
 
         Die9a = montecarlo.Die(faces=np.array([4,5,6]))
@@ -130,7 +151,7 @@ class MontecarloTestSuite(unittest.TestCase):
         self.assertTrue((df9.columns == ['combo_counts']) & (isinstance(df9.index, pd.MultiIndex)))
 
 
-    def test_10_perm_count(self):
+    def test_13_perm_count(self):
         #verify that perm count creates dataframe with perm column and MultiIndex
         Die10a = montecarlo.Die(faces=np.array([4,5,6]))
         Die10b = montecarlo.Die(faces=np.array([4,5,6]))
