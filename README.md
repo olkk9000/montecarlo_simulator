@@ -17,9 +17,11 @@ Create a dice:
 ```Die = montecarlo.Die(faces=np.array([4,5,6]))```
 
 Play a game:
-```die_list = [Die1, Die2, Die3]
+```
+die_list = [Die1, Die2, Die3]
 Game1 = montecarlo.Game(die_list)
-Game1.play(times=6)``` 
+Game1.play(times=6)
+``` 
 
 Analyze a game:
 ```Analyzer1 = montecarlo.Analyzer(Game1)
