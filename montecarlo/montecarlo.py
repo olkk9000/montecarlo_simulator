@@ -28,7 +28,7 @@ class Die:
 
     def change_weight(self, face, weight):
         """
-        PURPOSE: Changes the weight of one face of the die object.
+        PURPOSE: Changes the weight of a face of the die object.
 
         INPUT:
         face - string or numeric. Face value where weight will be changed.
@@ -132,7 +132,7 @@ class Game:
             raise ValueError("For argument 'weight', pass string 'wide' or 'narrow' in lower case")
 
 class Analyzer:
-    """PURPOSE: Analyze Object takes the results of a singel game and computes descriptive statistical properities."""
+    """PURPOSE: Analyzer Object takes the results of a single game and computes descriptive statistical properities."""
 
     def __init__(self, game):
         """ 

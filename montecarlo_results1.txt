@@ -1,0 +1,15 @@
+test_10_perm_count (__main__.MontecarloTestSuite.test_10_perm_count) ... ok
+test_1_change_weight (__main__.MontecarloTestSuite.test_1_change_weight) ... ok
+test_2_roll (__main__.MontecarloTestSuite.test_2_roll) ... ok
+test_3_current_state (__main__.MontecarloTestSuite.test_3_current_state) ... ok
+test_4_play (__main__.MontecarloTestSuite.test_4_play) ... ok
+test_5_show_results_wide (__main__.MontecarloTestSuite.test_5_show_results_wide) ... ok
+test_6_show_results_narrow (__main__.MontecarloTestSuite.test_6_show_results_narrow) ... ok
+test_7_jackpot (__main__.MontecarloTestSuite.test_7_jackpot) ... ok
+test_8_face_counts_per_roll (__main__.MontecarloTestSuite.test_8_face_counts_per_roll) ... ok
+test_9_combo_count (__main__.MontecarloTestSuite.test_9_combo_count) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.021s
+
+OK
