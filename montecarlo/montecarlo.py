@@ -145,7 +145,7 @@ class Analyzer:
         self.game = game
 
         if not isinstance(game, Game):
-            raise TypeError("Game must be a montecarlo Game class object")
+            raise ValueError("Game must be a montecarlo Game class object")
     
     def jackpot(self):
         """ 
