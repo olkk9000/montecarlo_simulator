@@ -1,4 +1,4 @@
-# Montecarlo Die Simulator 
+# Montecarlo Simulator 
 
 
 To install:
