@@ -1,11 +1,5 @@
-# ds5100_uts4gf_montecarlo
+# Montecarlo Die Simulator 
 
-
-## Metadata
- My name is Olivia Kantor and this project is a Monte Carlo Simulator. 
-
-
-## Synopsis
 
 To install:
 ```
